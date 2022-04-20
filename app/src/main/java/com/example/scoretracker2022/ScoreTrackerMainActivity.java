@@ -24,10 +24,10 @@ public class ScoreTrackerMainActivity extends AppCompatActivity implements Games
     }
 
     @Override
-    public void onGameSelected(Game game) {
+    public void onGameSelected(Game game, int selectedPosition) {
+        Log.i("LOGTAG", "onGameSelected(), selectedPosition: " + selectedPosition);
         gamesViewModel.setSelectedGame(game);
-
-        Log.i("LOGTAG", "Selected game: " + game.toString());
+        gamesViewModel.setSelectedPosition(selectedPosition);
 
         if (findViewById(R.id.vertical_fragment_container) != null) {
             // Swap the fragments

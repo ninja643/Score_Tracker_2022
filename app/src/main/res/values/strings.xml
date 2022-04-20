@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Score Tracker 2022</string>
     <string name="reset_score">Reset Score</string>
+    <string name="select_game_warning">Please select a game</string>
 </resources>

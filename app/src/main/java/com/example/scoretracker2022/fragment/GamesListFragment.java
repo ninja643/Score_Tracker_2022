@@ -73,7 +73,11 @@ public class GamesListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             gamesViewModel.getGames()
-                    .observe(requireActivity(), games -> recyclerView.setAdapter(new GamesRecyclerViewAdapter(games, gameSelectedListener)));
+                    .observe(requireActivity(),
+                            games -> {
+                                Log.i("LOGTAG", "Calling setAdapter(). Selected game: " + gamesViewModel.getSelectedPosition());
+                                recyclerView.setAdapter(new GamesRecyclerViewAdapter(games, gameSelectedListener, gamesViewModel.getSelectedPosition()));
+                            });
         }
         return view;
     }
