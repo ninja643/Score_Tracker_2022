@@ -1,10 +1,10 @@
 package com.example.scoretracker2022.fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scoretracker2022.databinding.FragmentGameBinding;
@@ -16,9 +16,9 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link Game}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class GamesRecyclerViewAdapter extends RecyclerView.Adapter<GamesRecyclerViewAdapter.ViewHolder> {
+public class GamesRecyclerViewAdapter extends RecyclerView.Adapter<GamesRecyclerViewAdapter.GameViewHolder> {
 
-    private int selectedPosition = RecyclerView.NO_POSITION;
+    private int selectedPosition;
     private final List<Game> games;
     private final GameSelectedListener gameSelectedListener;
 
@@ -33,12 +33,13 @@ public class GamesRecyclerViewAdapter extends RecyclerView.Adapter<GamesRecycler
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(FragmentGameBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+    @NonNull
+    public GameViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new GameViewHolder(FragmentGameBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final GameViewHolder holder, int position) {
         holder.setSelection(position);
     }
 
@@ -47,12 +48,12 @@ public class GamesRecyclerViewAdapter extends RecyclerView.Adapter<GamesRecycler
         return games.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private Game game;
         private FragmentGameBinding binding;
 
-        public ViewHolder(FragmentGameBinding binding) {
+        public GameViewHolder(FragmentGameBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             this.itemView.setOnClickListener(this);
