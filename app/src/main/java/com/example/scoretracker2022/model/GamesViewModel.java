@@ -1,25 +1,32 @@
 package com.example.scoretracker2022.model;
 
-import android.widget.AdapterView;
+import android.app.Application;
 
 import com.example.scoretracker2022.repository.GamesRepository;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.Observable;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class GamesViewModel extends ViewModel {
-    private MutableLiveData<List<Game>> games = new MutableLiveData<>();
+public class GamesViewModel extends AndroidViewModel {
     private MutableLiveData<Game> selectedGame = new MutableLiveData<>();
     private Integer selectedPosition = RecyclerView.NO_POSITION;
 
-    private GamesRepository repository = GamesRepository.INSTANCE;
+    private GamesRepository gamesRepository;
 
     public Integer getSelectedPosition() {
         return selectedPosition;
+    }
+
+    public GamesViewModel(@NonNull Application application) {
+        super(application);
+
+        gamesRepository = new GamesRepository(application);
     }
 
     public void setSelectedPosition(Integer selectedPosition) {
@@ -27,8 +34,7 @@ public class GamesViewModel extends ViewModel {
     }
 
     public LiveData<List<Game>> getGames() {
-        games.setValue(repository.getGames());
-        return games;
+        return gamesRepository.getGames();
     }
 
     public LiveData<Game> getSelectedGame() {
@@ -36,6 +42,19 @@ public class GamesViewModel extends ViewModel {
     }
 
     public void setSelectedGame(Game game) {
+
+        game.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                gameUpdated(sender, propertyId);
+            }
+        });
+
         selectedGame.setValue(game);
+    }
+
+    public void gameUpdated(Observable sender, int propertyId) {
+        final Game game = (Game) sender;
+        gamesRepository.update(game);
     }
 }
