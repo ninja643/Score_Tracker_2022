@@ -35,7 +35,7 @@ public class GamesRepository {
             return null;
         });
 
-        Futures.addCallback(future, new FutureCallback<Void>() {
+        Futures.addCallback(future, new FutureCallback<>() {
             @Override
             public void onSuccess(Void result) {
                 Log.i("LOGTAG", "Game added");

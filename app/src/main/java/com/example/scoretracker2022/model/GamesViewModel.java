@@ -14,10 +14,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class GamesViewModel extends AndroidViewModel {
-    private MutableLiveData<Game> selectedGame = new MutableLiveData<>();
+    private final MutableLiveData<Game> selectedGame = new MutableLiveData<>();
     private Integer selectedPosition = RecyclerView.NO_POSITION;
 
-    private GamesRepository gamesRepository;
+    private final GamesRepository gamesRepository;
 
     public Integer getSelectedPosition() {
         return selectedPosition;
